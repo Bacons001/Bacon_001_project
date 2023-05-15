@@ -75,5 +75,5 @@ def sad_parsing(url, num):
         stations_f.extend(stations)
 
     for_kat.append(len(stations_f))
-    
-    git remote add origin https://bacon_001_bestprojectever
+   
+
