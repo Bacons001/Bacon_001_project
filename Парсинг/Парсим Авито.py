@@ -33,6 +33,9 @@ for_kat = []
 sad_parsing('https://www.avito.ru/moskva/kvartiry/prodam/novostroyka-ASgBAQICAUSSA8YQAUDmBxSOUg?cd=1&f=ASgBAQICAUSSA8YQAkDmBxSOUr7BDRSCnZQC&p=', 3)
 
 # Объединяем все в таблицу для дальнейшего использования
+# Категориальные данные заполняем вручную: парсер возвращает длину списка, умножаем ее на 0, если признак не присущ квартире, 1 - присущ. 
+# Признаки нам заранее известны (каждая ссылка ведет на уникальное сочетание признаков: новостройка + окна во двор, новостройка + окна на улицу и т.д. 
+
 na_ul.extend([0]*for_kat[0])
 vo_dvor.extend([0]*for_kat[0])
 na_soln.extend([1]*for_kat[0])
