@@ -25,10 +25,10 @@ def sad_parsing(url, num): # Функция требует ссылку и ко�
         floor_f.extend(floor)
         floors_f.extend(floors)  
 
-        adress = driver.find_elements(By.CLASS_NAME, "geo-root-zPwRk") # Ищем данные по адрессу
+        adress = driver.find_elements(By.CLASS_NAME, "geo-root-zPwRk") # Ищем данные по адресу
         adresses = [i.text for i in adress]
 
-        adress = [i.split('\n') for i in adresses] # Разделяем на метро и сам адресс. Добавляем "?" для случаев, когда адрес не указан
+        adress = [i.split('\n') for i in adresses] # Разделяем на метро и сам адрес. Добавляем "?" для случаев, когда адрес не указан
         for i in range(len(adress)):
             adress[i].append('?') 
 
