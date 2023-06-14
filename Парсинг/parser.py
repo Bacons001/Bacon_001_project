@@ -1,17 +1,19 @@
-def sad_parsing(url, num):
+def sad_parsing(url, num): # Функция требует ссылку и количество страниц для парсинга
     for num in [*range(num)]:
-        driver.get(url + str(num +2))
+        driver.get(url + str(num +2)) # С помощью драйвера открываем ссылку
 
-        price_n = driver.find_elements(By.CLASS_NAME, 'price-root-RA1pj')
+        price_n = driver.find_elements(By.CLASS_NAME, 'price-root-RA1pj') # Ищем все цены квартир по названию элемента
+        # Элемент содержит цену за метр и цену квартиры. Разделяем их для дальнешего использования
         prices = [i.text.split('\n') for i in price_n]
-        prices_per_m = [prices[i][1] for i in range(len(prices))]
+        prices_per_m = [prices[i][1] for i in range(len(prices))] 
         prices_per_flat = [prices[i][0] for i in range(len(prices))]
 
-        prices_per_m_f.extend(prices_per_m)
+        prices_per_m_f.extend(prices_per_m) 
         prices_per_flat_f.extend(prices_per_flat)
 
 
-        title = driver.find_elements(By.CLASS_NAME, "title-root-zZCwT")
+        title = driver.find_elements(By.CLASS_NAME, "title-root-zZCwT") 
+        # Аналогичные действия для типа квартиры, кв. метров, этажа, и количества этажей в доме
         titles = [i.text.split(', ') for i in title][::2]
         flat = [titles[i][0] for i in range(len(titles))]
         m_2 = [titles[i][1] for i in range(len(titles))]
@@ -23,10 +25,10 @@ def sad_parsing(url, num):
         floor_f.extend(floor)
         floors_f.extend(floors)  
 
-        adress = driver.find_elements(By.CLASS_NAME, "geo-root-zPwRk")
+        adress = driver.find_elements(By.CLASS_NAME, "geo-root-zPwRk") # Ищем данные по адрессу
         adresses = [i.text for i in adress]
 
-        adress = [i.split('\n') for i in adresses]
+        adress = [i.split('\n') for i in adresses] # Разделяем на метро и сам адресс. Добавляем "?" для случаев, когда адресс не указан
         for i in range(len(adress)):
             adress[i].append('?') 
 
@@ -36,11 +38,11 @@ def sad_parsing(url, num):
         stations = []
         metro_t = []
 
-        for i in range(len(metros)):
+        for i in range(len(metros)): # Создаем цикл для выделения станции метро
                 lst = list(metros[i])
                 station = []
                 metro = []
-                for i in lst:
+                for i in lst: # Случай, когда метро не указано
                     if i == '?':
                         stations.append('')
                         metro_t.append('')
@@ -48,7 +50,7 @@ def sad_parsing(url, num):
                     elif i.isalpha() or i == ' ':
                         station.append(i)
 
-                if i != '?':
+                if i != '?': # Убираем количество минут до метро, все не нужные буквы (до, от, мин и т.д.) и оставляем только его название
                     new_words = []
                     words = ''.join(station).split(' ')
                     words = list(filter(None, words))
@@ -74,6 +76,6 @@ def sad_parsing(url, num):
         adresses_f.extend(adress_ul) 
         stations_f.extend(stations)
 
-    for_kat.append(len(stations_f))
+    for_kat.append(len(stations_f)) # Считаем длину данных для категориальных данных
    
 
