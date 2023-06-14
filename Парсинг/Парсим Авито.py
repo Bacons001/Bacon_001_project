@@ -1,9 +1,10 @@
-
 from bs4 import BeautifulSoup  
 from selenium import webdriver 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 options = webdriver.ChromeOptions()
+
+# Настраиваем параметры драйвера, чтобы Авито нас не ловил
 options.add_experimental_option("excludeSwitches", ["enable-automation"])
 options.add_experimental_option('useAutomationExtension', False)
 options.add_argument("--disable-blink-features=AutomationControlled")
@@ -11,6 +12,7 @@ import pandas as pd
 
 driver = webdriver.Chrome(options=options)
 
+# Создаем списки под все переменные
 prices_per_m_f= []
 prices_per_flat_f = []
 flat_f = []
@@ -24,8 +26,10 @@ na_ul = []
 na_soln = []
 novostroika = []
 for_kat = []
+# Запускаем прописанный парсер
 sad_parsing('https://www.avito.ru/moskva/kvartiry/prodam/novostroyka-ASgBAQICAUSSA8YQAUDmBxSOUg?cd=1&f=ASgBAQICAUSSA8YQAkDmBxSOUr7BDRSCnZQC&p=', 3)
 
+# Объединяем все в таблицу для дальнейшего использования
 na_ul.extend([0]*for_kat[0])
 vo_dvor.extend([0]*for_kat[0])
 na_soln.extend([1]*for_kat[0])
@@ -43,7 +47,8 @@ df = pd.DataFrame({'Тип квартиры': flat_f,
               'Цена квартиры': prices_per_flat_f,
               'Цена за м^2': prices_per_m_f
               })
-df.head()
+
+# Повторяем действия для каждой нужной ссылки
 
 prices_per_m_f= []
 prices_per_flat_f = []
@@ -187,8 +192,6 @@ df5 = pd.DataFrame({'Тип квартиры': flat_f,
               'Цена квартиры': prices_per_flat_f,
               'Цена за м^2': prices_per_m_f
               })
-
-
 df = df.append(df5, ignore_index = True )
 
 
@@ -226,9 +229,7 @@ df6 = pd.DataFrame({'Тип квартиры': flat_f,
               'Цена квартиры': prices_per_flat_f,
               'Цена за м^2': prices_per_m_f
               })
-
 df = df.append(df6, ignore_index = True )
 
-
+# Сохраняем итоговую таблицу
 df.to_csv('final_table.csv') 
-
